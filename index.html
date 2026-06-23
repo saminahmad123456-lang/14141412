@@ -1,1 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MATRIX HUB — Premium Apparel</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
 
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">MATRIX<span>HUB</span></a>
+      <ul class="nav-links">
+        <li><a href="#tshirts">T-Shirts</a></li>
+        <li><a href="#jerseys">Jerseys</a></li>
+        <li><a href="#order">Order</a></li>
+      </ul>
+      <div class="nav-cart" onclick="openCart()">
+        🛒 <span id="cart-count">0</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">New Drop 2025</p>
+      <h1 class="hero-title">WEAR<br>YOUR<br>VIBE</h1>
+      <p class="hero-sub">Premium tees & jerseys. Shipped fast. Built to last.</p>
+      <a href="#tshirts" class="btn-primary">Shop Now</a>
+    </div>
+    <div class="hero-badge">FREE DELIVERY<br>ON ৳1000+</div>
+  </section>
+
+  <!-- T-SHIRTS SECTION -->
+  <section class="products-section" id="tshirts">
+    <div class="section-header">
+      <span class="section-tag">Collection 01</span>
+      <h2>T-Shirts</h2>
+    </div>
+    <div class="products-grid" id="tshirt-grid">
+      <!-- Dynamically inserted by JS -->
+    </div>
+  </section>
+
+  <!-- JERSEYS SECTION -->
+  <section class="products-section" id="jerseys">
+    <div class="section-header">
+      <span class="section-tag">Collection 02</span>
+      <h2>Jerseys</h2>
+    </div>
+    <div class="products-grid" id="jersey-grid">
+      <!-- Dynamically inserted by JS -->
+    </div>
+  </section>
+
+  <!-- ORDER FORM SECTION -->
+  <section class="order-section" id="order">
+    <div class="order-container">
+      <div class="order-left">
+        <span class="section-tag">Checkout</span>
+        <h2>Place Your Order</h2>
+        <p>Fill in your details, pay via bKash, and enter your Transaction ID below.</p>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary" id="cart-summary">
+          <h3>Your Cart</h3>
+          <div id="cart-items-list"><p class="empty-cart">No items in cart yet.</p></div>
+          <div class="cart-total-row">
+            <span>Total</span>
+            <span id="cart-total">৳0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-right">
+        <form class="order-form" id="order-form" onsubmit="return false;">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="customer-name" placeholder="Your full name" required/>
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="customer-phone" placeholder="01XXXXXXXXX" required/>
+          </div>
+          <div class="form-group">
+            <label>Delivery Address *</label>
+            <textarea id="customer-address" rows="3" placeholder="House, Road, Area, City" required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Size *</label>
+            <select id="customer-size">
+              <option value="">Select Size</option>
+              <option>S</option>
+              <option>M</option>
+              <option>L</option>
+              <option>XL</option>
+              <option>XXL</option>
+            </select>
+          </div>
+
+          <div class="bkash-box">
+            <div class="bkash-logo">bKash</div>
+            <p>Send payment to <strong>01XXXXXXXXXX</strong> (Personal)</p>
+            <p class="bkash-note">After sending, enter the Transaction ID below.</p>
+          </div>
+
+          <div class="form-group">
+            <label>bKash Transaction ID *</label>
+            <input type="text" id="trx-id" placeholder="e.g. 8ABC123DEF" required/>
+          </div>
+          <div class="form-group">
+            <label>bKash Amount Sent (৳) *</label>
+            <input type="number" id="trx-amount" placeholder="e.g. 850" required/>
+          </div>
+
+          <button class="btn-primary btn-full" onclick="placeOrder()">Confirm Order</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-box">
+      <div class="modal-icon">✅</div>
+      <h2>Order Placed!</h2>
+      <p id="modal-order-id"></p>
+      <p>We received your order and will confirm via phone soon.</p>
+      <button class="btn-primary" onclick="closeModal()">Done</button>
+    </div>
+  </div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button onclick="closeCart()">✕</button>
+    </div>
+    <div id="sidebar-cart-items"></div>
+    <div class="cart-sidebar-footer">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="sidebar-total">৳0</span>
+      </div>
+      <button class="btn-primary btn-full" onclick="closeCart(); document.getElementById('order').scrollIntoView({behavior:'smooth'})">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MATRIX HUB — All Rights Reserved</p>
+    <p>Questions? Message us on <a href="#">Facebook</a></p>
+  </footer>
+
+  <script src="order.js"></script>
+</body>
+</html>
