@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product — MATRIX HUB</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── Product Page Specific ── */
+    .product-page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--muted); text-decoration: none;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--white); }
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .product-detail-img {
+      aspect-ratio: 1/1;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .product-detail-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .product-detail-img .big-placeholder {
+      font-size: 6rem; color: var(--border);
+    }
+    .product-detail-info { padding-top: 8px; }
+    .product-detail-tag {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px; display: block;
+    }
+    .product-detail-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+    .product-detail-price {
+      font-size: 2rem; font-weight: 700;
+      color: var(--accent); margin-bottom: 20px;
+    }
+    .product-detail-desc {
+      color: #aaa;
+      font-size: 0.95rem; line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .size-selector { margin-bottom: 24px; }
+    .size-selector label {
+      display: block;
+      font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 10px;
+    }
+    .size-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+    .size-btn {
+      width: 48px; height: 48px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--white);
+      border-radius: var(--radius);
+      font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    }
+    .size-btn:hover, .size-btn.active {
+      border-color: var(--accent);
+      background: var(--accent); color: #fff;
+    }
+    .detail-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+    .detail-actions .btn-primary { flex: 1; text-align: center; }
+    .btn-outline {
+      flex: 1;
+      display: inline-block; text-align: center;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { background: var(--accent); color: #fff; }
+    .product-meta {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .meta-row {
+      display: flex; gap: 12px;
+      font-size: 0.88rem;
+    }
+    .meta-label { color: var(--muted); min-width: 110px; }
+    .meta-value { color: var(--white); font-weight: 600; }
+    /* Related Products */
+    .related-section {
+      max-width: 1000px; margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .related-section h3 {
+      font-family: var(--font-display);
+      font-size: 2rem; margin-bottom: 24px;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    /* toast */
+    #toast {
+      display:none; position:fixed; bottom:28px; left:50%;
+      transform:translateX(-50%);
+      background: var(--accent); color:#fff;
+      padding:12px 28px; border-radius:8px;
+      font-weight:700; font-size:0.9rem;
+      z-index:9999; box-shadow:0 4px 24px rgba(0,0,0,0.4);
+    }
+    @media (max-width: 680px) {
+      .product-detail { grid-template-columns: 1fr; gap: 32px; }
+      .detail-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">MATRIX<span>HUB</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#tshirts">T-Shirts</a></li>
+        <li><a href="index.html#jerseys">Jerseys</a></li>
+        <li><a href="index.html#order">Order</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PRODUCT DETAIL -->
+  <div class="product-page">
+    <a href="index.html#tshirts" class="back-link">← Back to T-Shirts</a>
+
+    <div class="product-detail" id="product-detail">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+
+  <!-- RELATED PRODUCTS -->
+  <div class="related-section">
+    <h3>You Might Also Like</h3>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2025 MATRIX HUB — All Rights Reserved</p>
+    <p>Questions? Message us on <a href="#">Facebook</a></p>
+  </footer>
+
+  <div id="toast">✓ Added to Cart!</div>
+
+  <script>
+    // ── Product Data (keep in sync with order.js) ──
+    const TSHIRTS = [
+      { id: "ts1", name: "Classic Black Tee",    price: 650, img: "tshirt1.png", desc: "A timeless black tee with a relaxed fit. Made from 100% premium cotton for all-day comfort.", fabric: "100% Cotton", fit: "Regular Fit" },
+      { id: "ts2", name: "Oversized White Drop", price: 700, img: "tshirt2.png", desc: "Clean oversized silhouette with dropped shoulders. The everyday staple you didn't know you needed.", fabric: "100% Cotton", fit: "Oversized" },
+      { id: "ts3", name: "Urban Graphic Print",  price: 750, img: "tshirt3.png", desc: "Bold street-art inspired graphics printed on heavyweight cotton. Stand out in the crowd.", fabric: "Heavyweight Cotton", fit: "Regular Fit" },
+      { id: "ts4", name: "Acid Wash Vintage",    price: 750, img: "tshirt4.png", desc: "Retro acid-wash treatment for a lived-in look. Each piece is unique.", fabric: "Washed Cotton", fit: "Regular Fit" },
+      { id: "ts5", name: "Minimalist Logo Tee",  price: 680, img: "tshirt5.png", desc: "Subtle Matrix Hub logo embroidered on the chest. Less is more.", fabric: "Pima Cotton", fit: "Slim Fit" },
+    ];
+
+    const SIZES = ["S", "M", "L", "XL", "XXL"];
+    let selectedSize = "";
+
+    // ── Read URL param ──
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+    const product = TSHIRTS.find(p => p.id === productId);
+
+    if (!product) {
+      document.getElementById("product-detail").innerHTML =
+        '<p style="color:var(--muted)">Product not found. <a href="index.html" style="color:var(--accent)">Go back</a></p>';
+    } else {
+      // ── Render Detail ──
+      document.title = product.name + " — MATRIX HUB";
+      document.getElementById("product-detail").innerHTML = `
+        <div class="product-detail-img">
+          <img src="${product.img}" alt="${product.name}"
+            onerror="this.parentElement.innerHTML='<div class=&quot;big-placeholder&quot;>👕</div>'"/>
+        </div>
+        <div class="product-detail-info">
+          <span class="product-detail-tag">T-Shirt</span>
+          <h1 class="product-detail-name">${product.name}</h1>
+          <div class="product-detail-price">৳${product.price.toLocaleString()}</div>
+          <p class="product-detail-desc">${product.desc}</p>
+
+          <div class="size-selector">
+            <label>Select Size</label>
+            <div class="size-buttons">
+              ${SIZES.map(s => `<button class="size-btn" onclick="selectSize(this, '${s}')">${s}</button>`).join("")}
+            </div>
+          </div>
+
+          <div class="detail-actions">
+            <button class="btn-primary" onclick="addToCartAndGo()">Add to Cart & Order</button>
+            <a href="index.html#order" class="btn-outline" onclick="addToCartSilent()">Buy Now</a>
+          </div>
+
+          <div class="product-meta">
+            <div class="meta-row"><span class="meta-label">Fabric</span><span class="meta-value">${product.fabric}</span></div>
+            <div class="meta-row"><span class="meta-label">Fit</span><span class="meta-value">${product.fit}</span></div>
+            <div class="meta-row"><span class="meta-label">Wash Care</span><span class="meta-value">Machine wash cold</span></div>
+            <div class="meta-row"><span class="meta-label">Delivery</span><span class="meta-value">3–5 business days</span></div>
+          </div>
+        </div>
+      `;
+
+      // ── Render Related ──
+      const related = TSHIRTS.filter(p => p.id !== product.id);
+      document.getElementById("related-grid").innerHTML = related.map(p => `
+        <a href="product.html?id=${p.id}" class="product-card" style="text-decoration:none;display:block">
+          <div class="product-img-wrap">
+            <img src="${p.img}" alt="${p.name}"
+              onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;>👕</div>'"/>
+          </div>
+          <div class="product-info">
+            <div class="product-name" style="color:var(--white)">${p.name}</div>
+            <div class="product-price">৳${p.price.toLocaleString()}</div>
+          </div>
+        </a>
+      `).join("");
+    }
+
+    function selectSize(btn, size) {
+      document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedSize = size;
+    }
+
+    function saveCartItem() {
+      // Pass product + size to index.html via sessionStorage
+      const item = { ...product, type: "T-Shirt", selectedSize };
+      const existing = JSON.parse(sessionStorage.getItem("pendingCartItem") || "null");
+      const arr = JSON.parse(sessionStorage.getItem("pendingCart") || "[]");
+      arr.push(item);
+      sessionStorage.setItem("pendingCart", JSON.stringify(arr));
+    }
+
+    function addToCartAndGo() {
+      saveCartItem();
+      showToast();
+      setTimeout(() => { window.location.href = "index.html#order"; }, 900);
+    }
+
+    function addToCartSilent() {
+      saveCartItem();
+    }
+
+    function showToast() {
+      const t = document.getElementById("toast");
+      t.style.display = "block";
+      setTimeout(() => { t.style.display = "none"; }, 1800);
+    }
+  </script>
+</body>
+</html>
